@@ -166,6 +166,8 @@ baseurl: ""
 # ------------ The following options are not recommended to be modified ------------------
 
 kramdown:
+  # 엔터 한 번을 줄바꿈(<br>)으로 렌더링 (Obsidian·velog와 동일)
+  hard_wrap: true
   footnote_backlink: "&#8617;&#xfe0e;"
   syntax_highlighter: rouge
   syntax_highlighter_opts: # Rouge Options › https://github.com/jneen/rouge#full-options

@@ -1,0 +1,115 @@
+---
+---
+
+/* velog 본문 타이포그래피에 맞춘 시스템 한글 폰트 */
+@use 'abstracts/variables' with (
+  $theme: '{{ site.theme_mode }}',
+  $font-family-base: (
+    -apple-system,
+    BlinkMacSystemFont,
+    'Helvetica Neue',
+    'Apple SD Gothic Neo',
+    'Malgun Gothic',
+    'Nanum Gothic',
+    'Noto Sans KR',
+    'Noto Sans CJK KR',
+    Arial,
+    sans-serif
+  ),
+  $font-family-heading: (
+    -apple-system,
+    BlinkMacSystemFont,
+    'Helvetica Neue',
+    'Apple SD Gothic Neo',
+    'Malgun Gothic',
+    'Nanum Gothic',
+    'Noto Sans KR',
+    'Noto Sans CJK KR',
+    Arial,
+    sans-serif
+  )
+);
+
+/* prettier-ignore */
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
+
+/* append your custom style below */
+
+/* 글 본문: velog 값 (18px, line-height 1.7, keep-all) */
+.content {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  letter-spacing: -0.004em;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+
+  p {
+    margin-top: 1.125rem;
+    margin-bottom: 1.125rem;
+  }
+
+  h2,
+  h3,
+  h4 {
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: 2rem;
+    line-height: 1.5;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  h4 {
+    font-size: 1.3125rem;
+    line-height: 1.5;
+  }
+
+  /* 이미지 위아래 여백 */
+  a.popup {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
+}
+
+/* 다크 모드 본문 대비 강화 (기본 #afb0b1은 흐림) */
+[data-bs-theme='dark'] .content {
+  color: #e2e2e2;
+
+  h2,
+  h3,
+  h4 {
+    color: #f1f1f1;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .content {
+    font-size: 1rem;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+    }
+
+    a.popup {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
