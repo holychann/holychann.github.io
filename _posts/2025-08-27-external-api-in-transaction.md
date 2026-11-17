@@ -26,7 +26,7 @@ AI를 호출하는 모든 Service 코드가 문제였지만 하나를 예시로 
 ```java
 // 주간 AI 솔루션을 제공하는 메소드
 @Transactional
-getWeeklySolution(Long userId){
+public String getWeeklySolution(Long userId){
     
     // AI 호출을 위한 데이터 조회
     var weeklyData = paymentService.getWeeklyData(userId);
@@ -61,7 +61,7 @@ getWeeklySolution(Long userId){
 이 코드에서 문제점은 **실제로 트랜잭션이 필요 없는 부분까지 트랜잭션으로 감싸고 있다는 것** 이다.
 
 - 데이터 조회는 읽기에 최적화 된 `@Transactional(readOnly = true)` 권장
-- AI 응답 시간이 길어질 경우 DB 커넥션을 장시간 점유됨
+- AI 응답 시간이 길어질 경우 DB 커넥션이 장시간 점유됨
 - 동시에 여러 요청이 들어오면 커넥션 풀 고갈
 - 현재 적용된 `@Transactional` 은 DB 저장 부분에서만 필요함
 
@@ -86,7 +86,7 @@ getWeeklySolution(Long userId){
 // ServiceImpl
 // 주간 AI 솔루션을 제공하는 메소드
 // @Transactional 없음
-getWeeklySolution(Long userId){
+public String getWeeklySolution(Long userId){
     
     // AI 호출을 위한 데이터 조회
     var weeklyData = paymentService.getWeeklyData(userId);
@@ -106,7 +106,7 @@ getWeeklySolution(Long userId){
 ```java
 // CommandServiceImpl
 @Transactional  // 여기에 추가
-saveResult(String result){
+public void saveResult(String result){
     solutionRepository.save(result);
 }
 ```
@@ -161,7 +161,7 @@ public class PaymentService {
 결국은 `LlmService` 에서 `CommandService` 를 호출하는 것이니 프록시를 거치게 된다.
 2. Controller 에서 여러 개의 서비스 메소드 호출
 
-저는 컨트롤러는 얇게 끝내자는 의견이어서 CQRS 패턴을 도입을 결정함.
+저는 컨트롤러는 얇게 끝내자는 의견이어서 CQRS 패턴 도입을 결정함.
 
 <br />
 
@@ -205,14 +205,14 @@ public class SolutionService {
     private final LlmService llm;  // Ai 호출 전용 서비스
     private final CommandService cmd;  // 변경 전용, @Transactional 적용
 
-    getWeeklySolution(Long userId) {
+    public String getWeeklySolution(Long userId) {
         var user = query.getEntity(userId);  // 유저 검증
         
         var answer = llm.ask(prompt);  // 트랜잭션 밖에서 ai 호출
         
-        var id = cmd.saveSolution(user.getId(), answer); // 트랜잭션 시작 지점
+        cmd.saveSolution(user.getId(), answer); // 트랜잭션 시작 지점
         
-        return answer  // 결과 반환
+        return answer;  // 결과 반환
     }
 }
 ```
