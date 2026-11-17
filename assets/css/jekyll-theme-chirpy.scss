@@ -266,6 +266,40 @@ $rail-close-delay: 0s;
   }
 }
 
+/* 메뉴 링크를 눌러 페이지가 바뀐 직후: 애니메이션 없이 펼친 채로 시작 (_includes/metadata-hook.html) */
+@media (min-width: 850px) {
+  html.sidebar-keep #sidebar {
+    width: 260px;
+    box-shadow: 1px 0 0 var(--sidebar-border-color);
+    transition: none;
+
+    .site-title,
+    .site-subtitle,
+    .sidebar-bottom,
+    .nav-link span {
+      opacity: 1;
+      visibility: visible;
+      transition: none;
+    }
+
+    #avatar {
+      transform: none;
+      transition: none;
+    }
+
+    ul li.nav-item.active .nav-link {
+      background-color: var(--sidebar-hover-bg);
+      transition: none;
+    }
+  }
+}
+
+@media (min-width: 1650px) {
+  html.sidebar-keep #sidebar {
+    width: 300px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   #sidebar,
   #sidebar * {
