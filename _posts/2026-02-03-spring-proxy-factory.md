@@ -8,7 +8,7 @@ image:
   alt: 프록시 팩토리
 ---
 ## 들어가며
-템플릿 메서드 패턴과, 프록시 패턴을 배우며 기본기를 다졌다. 다음 순서로 스프링에서 지원하는 스프링인 *프록시 팩토리* 를 정리해보려 한다.
+템플릿 메서드 패턴과, 프록시 패턴을 배우며 기본기를 다졌다. 다음 순서로 스프링에서 지원하는 기능인 *프록시 팩토리* 를 정리해보려 한다.
 인터페이스가 존재하면 JDK 동적 프록시를 사용할 수 있고, 인터페이스가 없는 경우에는 CGLIB 프록시를 사용한다. 프록시 팩토리는 개발자가 직접 프록시 방식을 선택하지 않아도 내부에서 적절한 프록시 구현을 자동으로 결정한다.
 
 
@@ -20,14 +20,14 @@ image:
 
 스프링에서 제공하는 프록시를 통합해서 편리하게 만들어주는 기능이다.
 
-위에서 언급한 것 처럼 인터페이스가 있으면 JDK 동적 프록시를 사용하고, 구체 클래스만 있다면 CGLIB 를 사용한다.
+위에서 언급한 것처럼 인터페이스가 있으면 JDK 동적 프록시를 사용하고, 구체 클래스만 있다면 CGLIB 를 사용한다.
 
 ### 왜 필요할까?
 
-프로젝트를 진행 할 때 컨트롤러 레이어의 경우 인터페이스를 따로 만들지 않는 경우가 많다. 하지만 서비스와 레포지토리 레이어의 경우 대부분 인터페이스를 만들고 구현체를 만든다. 
+프로젝트를 진행할 때 컨트롤러 레이어의 경우 인터페이스를 따로 만들지 않는 경우가 많다. 하지만 서비스와 레포지토리 레이어의 경우 대부분 인터페이스를 만들고 구현체를 만든다. 
 이 경우 JDK 동적 프록시가 제공하는 `InvocationHandler` 와 CGLIB 가 제공하는 `MethodInterceptor` 를 각각 중복으로 따로 구현해야 할까? 
 
-프록시 팩토리에서는 이러한 문제를 해결해준다. 부가 기능 역할을 하는 `Advice` 를 등록만 해주면 된다. 결과적으로 개발자는 `InvocationHandler` 나 `MethodInterceptor` 를 신경쓰지 않고 `Advice` 만 만들면 된다.
+프록시 팩토리에서는 이러한 문제를 해결해준다. 부가 기능 역할을 하는 `Advice` 를 등록만 해주면 된다. 결과적으로 개발자는 `InvocationHandler` 나 `MethodInterceptor` 를 신경 쓰지 않고 `Advice` 만 만들면 된다.
 
 ### Advice 란?
 
@@ -64,12 +64,11 @@ Advice 는 부가 기능 그 자체이다. 타겟 메서드 실행 과정에 끼
 
 ``` java
 NameMatchMethodPointcut pointcut = new NameMatchMethodPointcut();
-        pointcut.setMappedNames("request*", "order*", "save*");
+pointcut.setMappedNames("request*", "order*", "save*");
 ```
 
 스프링은 많은 포인트컷을 제공한다. 
-`NameMatchMethodPointcut`: 메서드 이름을 기반으로 매칭한다. 내부에서는 `PatternMatchUtils` 를 사
-용한다.
+`NameMatchMethodPointcut`: 메서드 이름을 기반으로 매칭한다. 내부에서는 `PatternMatchUtils` 를 사용한다.
 `AnnotationMatchingPointcut`: 애노테이션으로 매칭한다.
 `AspectJExpressionPointcut`: aspectJ 표현식으로 매칭한다.
 

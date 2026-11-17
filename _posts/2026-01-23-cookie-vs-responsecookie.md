@@ -13,14 +13,14 @@ image:
 하지만 테스트 과정에서 쿠키가 정상적으로 저장되지 않는 문제를 겪게 되었고, 이를 계기로 쿠키 동작 방식에 대해 다시 살펴보게 되었다.
 
 문제의 원인은 단순했다.
-HTTP와 HTTPS 간에는 쿠키가 전달되지 않는다는 브라우저의 보안 정책 때문이었다.
+`Secure` 쿠키는 HTTPS 에서만 전송되고, http 와 https 처럼 스킴이 다르면 브라우저가 다른 사이트로 판단하는 보안 정책 때문이었다.
 다만 이 과정을 통해 그동안 막연하게 사용해왔던 쿠키에 대해 제대로 이해할 필요성을 느꼈다.
 
 이 글에서는 해당 경험을 바탕으로 Cookie 와 Spring 에서 제공하는 ResponseCookie 에 대해서 정리해보려고 한다.
 
 ## Cookie 와 ResponseCookie
 
-### Cookie 가 뭐에요?
+### Cookie 가 뭐예요?
 
 Cookie 는 웹 서버가 웹 클라이언트에게 보내는 데이터 종류 중 하나로, 브라우저는 받은 쿠키를 내부에 저장하고 웹 서버에 요청을 보낼 때마다 쿠키를 요청에 담아서 전달한다.
 
@@ -48,7 +48,7 @@ response.addCookie(cookie);  // 응답에 쿠키 추가
 - 쿠키를 응답에 추가할 때
 - 보안 설정이 중요한 경우
 
-Cookie 의 경우 보안 설정에 한계가 있다. 하지만 `ResponseCookie` 의 경우 더 풍부한 보안 설정 메서드를 지원하기 때문에 응답으로 사용하기 적합하다.
+Cookie 의 경우 보안 설정에 한계가 있다. (Servlet 6 / Spring Boot 3 부터는 `setAttribute("SameSite", "Lax")` 로 설정할 수 있다.) 하지만 `ResponseCookie` 의 경우 더 풍부한 보안 설정 메서드를 지원하기 때문에 응답으로 사용하기 적합하다.
 
 ### ResponseCookie 설정 방법
 
@@ -72,7 +72,7 @@ response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 | :- | - |
 | Servlet 표준 | Spring 전용 |
 | Setter 패턴 | Builder 패턴 |
-| 제한적인 보안 설정 | 보안 설정 완전 지원 |
+| 제한적인 보안 설정 (Servlet 6 이전) | 보안 설정 완전 지원 |
 
 <br />
 
@@ -100,7 +100,7 @@ sameSite() 에는 몇 가지 옵션이 존재한다.
    다른 사이트에서 발생하는 fetch, axios 요청에는 쿠키가 담기지 않음.
    CSRF 공격 차단 가능
  - None <span style="color:grey">(완전 개방)</span>
-   이 경우에는 secure 옵션을 무조건 true 로 해야한다. 하지만 그럼에도 CSRF 공격에 취약하다.
+   이 경우에는 secure 옵션을 무조건 true 로 해야 한다. 하지만 그럼에도 CSRF 공격에 취약하다.
 
 <br />
 
@@ -164,7 +164,7 @@ SameSite 는 3~4번 단계를 차단해준다.
 .httpOnly(true)
 ```
 
-XSS 공격을 방어할 수 있다.
+XSS 공격이 발생해도 쿠키를 탈취당하지 않도록 막을 수 있다.
 
 
 #### - secure()
