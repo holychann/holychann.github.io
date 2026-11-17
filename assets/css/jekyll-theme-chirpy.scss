@@ -114,6 +114,11 @@ body:has(article[data-toc]) #access-recent-categories {
   display: none !important;
 }
 
+/* 글 맨 위 대표 이미지 아래 설명(image.alt로 만들어지는 figcaption) 숨김. 본문 이미지 설명은 그대로 */
+.preview-img + figcaption {
+  display: none;
+}
+
 /* 다크 모드: velog 다크 팔레트 (배경 #121212, 본문 #ECECEC) */
 @mixin velog-dark {
   --main-bg: #121212;

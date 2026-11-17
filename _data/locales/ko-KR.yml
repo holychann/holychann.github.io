@@ -1,0 +1,5 @@
+# 테마(jekyll-theme-chirpy)의 ko-KR 문구 중 바꾸고 싶은 것만 적는다.
+# Jekyll이 테마 _data와 깊게 합치므로 나머지 문구는 테마 값을 그대로 쓴다.
+
+panel:
+  toc: 목차
