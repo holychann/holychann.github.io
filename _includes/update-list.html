@@ -1,0 +1,33 @@
+{% comment %}
+  테마(jekyll-theme-chirpy 7.6.0)의 _includes/update-list.html을 덮어쓴다.
+  오른쪽 패널의 '최근 업데이트' 대신, 최근 글이 올라온 순서대로 상위 카테고리 5개와 각 카테고리의 글 수를 보여 준다.
+  글 페이지에서는 CSS(assets/css/jekyll-theme-chirpy.scss)로 숨긴다.
+{% endcomment %}
+
+{% assign MAX_SIZE = 5 %}
+{% assign recent_categories = '' | split: '' %}
+
+{% for post in site.posts %}
+  {% if post.hidden %}{% continue %}{% endif %}
+  {% assign category = post.categories | first %}
+  {% unless category %}{% continue %}{% endunless %}
+  {% unless recent_categories contains category %}
+    {% assign recent_categories = recent_categories | push: category %}
+  {% endunless %}
+  {% if recent_categories.size >= MAX_SIZE %}{% break %}{% endif %}
+{% endfor %}
+
+{% if recent_categories.size > 0 %}
+  <section id="access-recent-categories">
+    <h2 class="panel-heading">최근 카테고리</h2>
+    <ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2">
+      {% for category in recent_categories %}
+        {% capture category_url %}/categories/{{ category | slugify | url_encode }}/{% endcapture %}
+        <li class="d-flex lh-lg">
+          <a class="text-truncate" href="{{ category_url | relative_url }}">{{ category }}</a>
+          <span class="category-count">({{ site.categories[category].size }})</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}

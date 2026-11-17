@@ -86,8 +86,31 @@
   }
 }
 
-/* 오른쪽 패널의 '최근 업데이트' 목록 숨김 */
-#access-lastmod {
+/* 오른쪽 패널 '최근 카테고리' (_includes/update-list.html) */
+#access-recent-categories {
+  li {
+    align-items: baseline;
+  }
+
+  a {
+    color: inherit;
+    border-bottom: none;
+
+    &:hover {
+      color: var(--link-color);
+    }
+  }
+
+  .category-count {
+    flex-shrink: 0;
+    margin-left: 0.5rem;
+    color: var(--text-muted-color);
+    font-size: 0.85em;
+  }
+}
+
+/* 글 페이지(<article data-toc>)에서는 숨김: 오른쪽에는 바로가기 목차만 */
+body:has(article[data-toc]) #access-recent-categories {
   display: none !important;
 }
 
