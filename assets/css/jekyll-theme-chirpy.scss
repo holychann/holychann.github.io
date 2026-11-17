@@ -119,11 +119,11 @@ body:has(article[data-toc]) #access-recent-categories {
   display: none;
 }
 
-/* 글 본문의 굵은 글씨(**…**)는 목차 하이라이트 색(--toc-highlight)으로. 링크 안의 굵은 글씨는 링크 색 유지 */
+/* 글 본문의 굵은 글씨(**…**)는 강조 파랑(--bold-color). 링크 안의 굵은 글씨는 링크 색 유지 */
 article[data-toc] .content {
   strong,
   b {
-    color: var(--toc-highlight);
+    color: var(--bold-color);
   }
 
   a strong,
@@ -152,6 +152,8 @@ article[data-toc] .content {
   --tb-even-bg: #181818;
   --highlight-bg-color: #1e1e1e;
   --inline-code-bg: #2a2a2a;
+  --bold-color: #a5cdf7; /* 본문 굵은 글씨 */
+  --toc-highlight: #7f9fc2; /* 목차 하이라이트: 굵은 글씨보다 눈에 덜 띄게 */
 
   .highlight,
   .highlight .w {
@@ -176,6 +178,22 @@ article[data-toc] .content {
 @media (prefers-color-scheme: dark) {
   :root:not([data-bs-theme]) {
     @include velog-dark;
+  }
+}
+
+/* 라이트 모드: 본문 굵은 글씨, 목차 하이라이트(굵은 글씨보다 눈에 덜 띄게) */
+@mixin light-accents {
+  --bold-color: #3a78c4;
+  --toc-highlight: #7f9fc9;
+}
+
+:root[data-bs-theme='light'] {
+  @include light-accents;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-bs-theme]) {
+    @include light-accents;
   }
 }
 
