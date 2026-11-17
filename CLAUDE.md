@@ -67,6 +67,11 @@ bundle exec htmlproofer <scratch>/build --disable-external \
    | `==강조==` | `**강조**` |
    | `%%주석%%` | 삭제 |
    | 본문 `# 제목` (h1) | `##` 이하로 (제목은 front matter `title`) |
+   | 글/목록 바로 아래 붙은 ` ``` ` 코드 펜스 | 펜스 앞에 빈 줄 추가 (kramdown은 빈 줄이 없으면 코드를 목록·문단 텍스트로 삼킨다) |
+   | 1이 아닌 번호로 시작하는 목록 (`2. …`) | 바로 앞 줄에 `{: start="2"}` (kramdown은 시작 번호를 무시하고 1로 매긴다) |
+   | 본문에 `{{ }}`·`{% %}` (예: GitHub Actions `${{ secrets.X }}`) | front matter에 `render_with_liquid: false` (Liquid가 빈 문자열로 바꿔 버린다) |
+
+   위 세 가지는 kramdown 한계라 발행본에만 적용하고 원본 노트는 고치지 않는다.
 
 6. 위 CI와 같은 검증(프로덕션 빌드 + htmlproofer)을 통과시킨다.
 7. 글과 이미지를 커밋하고 `main`에 push한다. 예: `docs: add post on redis pipelining`
