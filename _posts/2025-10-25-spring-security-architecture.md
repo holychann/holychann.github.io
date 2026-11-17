@@ -66,12 +66,14 @@ Spring Security 에서는 여러 필터가 모여 하나의 필터 체인을 이
 public class SecurityConfig {
 
     @Bean
+    @Order(1)
     public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception{
 
         return http.build();
     }
 
     @Bean
+    @Order(2)
     public SecurityFilterChain filterChain2(HttpSecurity http) throws Exception {
 
         return http.build();
@@ -97,6 +99,7 @@ public class SecurityConfig {
 
 ``` java
 @Bean
+@Order(1)
 public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
 
     http
@@ -110,6 +113,7 @@ public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
 }
 
 @Bean
+@Order(2)
 public SecurityFilterChain filterChain2(HttpSecurity http) throws Exception {
 
     http
