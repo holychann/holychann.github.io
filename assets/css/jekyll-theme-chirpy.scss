@@ -119,6 +119,19 @@ body:has(article[data-toc]) #access-recent-categories {
   display: none;
 }
 
+/* 글 본문의 굵은 글씨(**…**)는 목차 하이라이트 색(--toc-highlight)으로. 링크 안의 굵은 글씨는 링크 색 유지 */
+article[data-toc] .content {
+  strong,
+  b {
+    color: var(--toc-highlight);
+  }
+
+  a strong,
+  a b {
+    color: inherit;
+  }
+}
+
 /* 다크 모드: velog 다크 팔레트 (배경 #121212, 본문 #ECECEC) */
 @mixin velog-dark {
   --main-bg: #121212;
