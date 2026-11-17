@@ -99,9 +99,7 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-# TODO: assets/img/avatar.png 추가 후 아래 값으로 변경 (파일 없이 지정하면 CI의 htmlproofer가 실패)
-# avatar: /assets/img/avatar.png
-avatar:
+avatar: /assets/img/avatar.jpg
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
