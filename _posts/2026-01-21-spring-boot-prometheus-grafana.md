@@ -159,7 +159,7 @@ fly launch --name 앱_이름 --no-deploy
 fly volumes create prometheus_data --size 3 --region nrt --app 앱_이름
 ```
 
-볼륨은 쉽게 말해서 외장하드 라고 볼 수 있다.
+볼륨은 쉽게 말해서 외장하드라고 볼 수 있다.
 
 {: start="3"}
 3. prometheus/fly.toml 에 mount 추가
@@ -183,7 +183,7 @@ fly deploy --app 앱_이름
 ### Grafana 적용하기
 > 경로: grafana/provisioning/datasources/datasource.yml
 
-Spring 과 Prometheus 와 분리하여 grafana 디렉토리를 생성한다.
+Spring, Prometheus 와 분리하여 grafana 디렉토리를 생성한다.
 그리고 `datasource.yml` 에 다음 내용을 작성한다.
 
 ``` yml
@@ -193,7 +193,7 @@ datasources:
   - name: Prometheus
     type: prometheus
     access: proxy
-    url: http://prometheus.internal:9090  # 프로메테우스 주소
+    url: http://prometheus_앱_이름.internal:9090  # 프로메테우스 주소
     isDefault: true
 ```
 
@@ -244,7 +244,7 @@ fly secrets set \
 5. 배포
 
 ``` cli
-fly deploy --app hubspace-grafana
+fly deploy --app Grafana_앱_이름
 ```
 
 <br />
@@ -253,7 +253,7 @@ fly deploy --app hubspace-grafana
 
 ### Prometheus
 
-Prometheus 는 Flyio 의 경우 `fly proxy 9090:9090 --app prometheus_앱_이름` 를 터미널에 입력해야 로컬에서 접속할 수 있다.
+Prometheus 는 Fly.io 의 경우 `fly proxy 9090:9090 --app prometheus_앱_이름` 를 터미널에 입력해야 로컬에서 접속할 수 있다.
 EC2 의 경우 Prometheus 의 IP 로 접속하면 된다.
 
 ![Prometheus Target health 화면에서 API 서버 상태가 UP으로 표시된 모습](/assets/img/posts/spring-boot-prometheus-grafana/01-prometheus-targets.png)
@@ -263,8 +263,8 @@ Status > Targets 에 들어가면 API 서버가 보이고 State 가 `UP` 이면 
 
 ### Grafana
 
-Grafana 는 Flyio 의 경우 `Hostname` 으로 그냥 들어갈 수 있다.
-EC2 의 경우 Prometheus 와 방식으로 접속하면 된다.
+Grafana 는 Fly.io 의 경우 `Hostname` 으로 그냥 들어갈 수 있다.
+EC2 의 경우 Prometheus 와 같은 방식으로 접속하면 된다.
 
 로그인을 하고 아래와 같은 화면이 보인다면 성공이다.
 대시보드 구성은 이번 포스트에서는 스킵하려고 한다. `Grafana 템플릿` 을 검색하면 모니터링 대시보드 템플릿을 찾아볼 수 있다.
