@@ -6,41 +6,41 @@ theme: jekyll-theme-chirpy
 # The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
 # If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
 # otherwise, the layout language will use the default value of 'en'.
-lang: en
+lang: ko-KR
 
 # Change to your timezone › https://zones.arilyn.cc
-timezone:
+timezone: Asia/Seoul
 
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: Chirpy # the main title
+title: holychan's Tech Blog # the main title
 
-tagline: A text-focused Jekyll theme # it will display as the subtitle
+tagline: 인프라 · 시스템 아키텍처 · 안정적인 서비스 운영 # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
-  A minimal, responsive and feature-rich Jekyll theme for technical writing.
+  인프라와 시스템 아키텍처를 중심으로, 실제 문제를 해결하는 안정적인 시스템을
+  설계하고 운영하며 배운 것을 기록하는 소프트웨어 엔지니어의 기술 블로그입니다.
 
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
-url: ""
+url: "https://holychann.github.io"
 
 github:
-  username: github_username # change to your GitHub username
+  username: holychann # change to your GitHub username
 
-twitter:
-  username: twitter_username # change to your Twitter username
+# twitter:
+#   username: twitter_username # change to your Twitter username
 
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: your_full_name
-  email: example@domain.com # change to your email address
+  name: 성찬
+  email: east0321@outlook.kr # change to your email address
   fediverse_handle: # fill in your fediverse handle. E.g. "@username@domain.com"
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/username # change to your Twitter homepage
-    - https://github.com/username # change to your GitHub homepage
+    - https://github.com/holychann # change to your GitHub homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
@@ -99,6 +99,8 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
+# TODO: assets/img/avatar.png 추가 후 아래 값으로 변경 (파일 없이 지정하면 CI의 htmlproofer가 실패)
+# avatar: /assets/img/avatar.png
 avatar:
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
