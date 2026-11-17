@@ -28,7 +28,7 @@ main 브랜치에 push 이벤트가 발생하면 해당 워크플로우가 실�
 
 {: start="2"}
 2. 작업(jobs)
-실행 할 여러 개의 작업을 작성한다. 각 작업은 독립적으로 실행된다. 깃허브에서 제공하는 VM 또는 컨테이너에서 실행되고, ubuntu, linux 등 다양한 실행환경을 제공한다.
+실행 할 여러 개의 작업을 작성한다. 각 작업은 독립적으로 실행된다. 깃허브에서 제공하는 VM 또는 컨테이너에서 실행되고, ubuntu, windows, macOS 등 다양한 실행환경을 제공한다.
 
 - 스텝(steps): jobs 는 여러 개의 스텝으로 구성된다. 각 단계는 특정 작업을 실행하고, 명령어를 실행하거나 외부 라이브러리를 사용할 수 있다.
 
@@ -65,7 +65,7 @@ main 브랜치에 체크아웃을 한다.
 ```
 깃허브 Action 머신에 JDK 를 설치한다. 
 - java-version: 설치할 JDK 의 버전.
-- distribution: 빌드 기관 설정(필수)  temurin이 가장 널리 사용됨.
+- distribution: 빌드 기관 설정(필수) temurin이 가장 널리 사용됨.
 - cache: 프로젝트가 사용하는 의존성들을 캐싱.
 
 ---
@@ -75,7 +75,7 @@ main 브랜치에 체크아웃을 한다.
 
 ``` yml
       - name: Build with gradle
-        working-directory: ./backend
+        working-directory: ./verify-student-api
         run: ./gradlew build
 
 ```
@@ -163,7 +163,7 @@ build 단계에서와 같이 체크아웃 해준다.
       - name: set up flyio CLI
         uses: superfly/flyctl-actions/setup-flyctl@master
 ```
-배포에 빌표한 flyio 를 먼저 설치해준다.
+배포에 필요한 flyio 를 먼저 설치해준다.
 
 ---
 
