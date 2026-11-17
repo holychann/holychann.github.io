@@ -3,6 +3,9 @@ title: "[암호학] 대칭키와 비대칭키 이해하기"
 date: 2026-11-18 03:05:00 +0900
 categories: [보안]
 tags: []
+image:
+  path: /assets/img/posts/symmetric-asymmetric-key/cover.png
+  alt: 대칭키와 비대칭키 이해하기
 ---
 ### 대칭키(Symmetric Key)
 
