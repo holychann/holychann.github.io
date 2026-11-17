@@ -46,6 +46,7 @@ bundle exec htmlproofer <scratch>/build --disable-external \
 - Obsidian 원본 노트의 문장·내용은 수정하지 않는다.
   단, 문법 오류(예: 닫는 `**` 앞 공백 `**장점: **`)는 발행본과 원본 노트 양쪽에서 고친다 (사용자 요청).
 - velog에서 붙여넣은 `velog.velcdn.com` 이미지는 내려받아 `assets/img/posts/<슬러그>/`로 옮기고 경로를 바꾼다.
+  `<img src="…velcdn…" width=… style=…>` HTML 태그는 `src`만 로컬 경로로 바꾸고 크기 속성은 두며, `alt`를 추가한다.
 
 순서:
 
