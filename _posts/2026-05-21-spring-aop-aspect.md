@@ -8,7 +8,7 @@ image:
   alt: AOP 개념과 @Aspect
 ---
 ## 문제점
-프로젝트를 시작한지 6개월이 지난 시점에서 코드 리팩토링을 시작하게 되었는데, 눈에 띄는 부분이 보였다.
+프로젝트를 시작한 지 6개월이 지난 시점에서 코드 리팩토링을 시작하게 되었는데, 눈에 띄는 부분이 보였다.
 
 ``` java
 long startTime = System.currentTimeMillis();
@@ -45,28 +45,29 @@ AOP 를 사용할 때 세 가지 방식으로 실제 로직에 추가될 수 있
 @Slf4j
 @Aspect
 public class AspectV6Advice {
-@Around("hello.aop.order.aop.Pointcuts.orderAndService()")
-public Object doTransaction(ProceedingJoinPoint joinPoint) throws
-Throwable {
-    try {
-      //@Before
-      log.info("[around][트랜잭션 시작] {}", joinPoint.getSignature());
-      
-      Object result = joinPoint.proceed();
-      
-      //@AfterReturning
-      log.info("[around][트랜잭션 커밋] {}", joinPoint.getSignature());
-      return result;
-      } catch (Exception e) {
-      //@AfterThrowing
-      log.info("[around][트랜잭션 롤백] {}", joinPoint.getSignature());
-      throw e;
-      } finally {
-      //@After
-      log.info("[around][리소스 릴리즈] {}", joinPoint.getSignature());
-   }
+
+    @Around("hello.aop.order.aop.Pointcuts.orderAndService()")
+    public Object doTransaction(ProceedingJoinPoint joinPoint) throws Throwable {
+        try {
+            //@Before
+            log.info("[around][트랜잭션 시작] {}", joinPoint.getSignature());
+
+            Object result = joinPoint.proceed();
+
+            //@AfterReturning
+            log.info("[around][트랜잭션 커밋] {}", joinPoint.getSignature());
+            return result;
+        } catch (Exception e) {
+            //@AfterThrowing
+            log.info("[around][트랜잭션 롤백] {}", joinPoint.getSignature());
+            throw e;
+        } finally {
+            //@After
+            log.info("[around][리소스 릴리즈] {}", joinPoint.getSignature());
+        }
+    }
 }
-``` 
+```
 
 Pointcut 표현식은 `@Around("{여기에 Pointcut 표현식 작성}")` 여기에 작성한다. 문법이 따로 있으니 찾아보도록 하자.
 
@@ -74,8 +75,8 @@ Pointcut 표현식은 `@Around("{여기에 Pointcut 표현식 작성}")` 여기�
 > 위 예시 코드를 보면서 확인하면 이해하기 편하다.
 
 - @Before: joinPoint.proceed() 가 실행되기 전에 실행할 부가 기능
-- @After: joinPoint.proceed() 가 실행된 후 실행할 부가 기능
-- @AfterReturning: joinPoint.proceed() 가 실행이 완료된 후 실행할 부가 기능
+- @After: joinPoint.proceed() 의 성공, 예외 여부와 상관없이 항상 실행할 부가 기능 (finally)
+- @AfterReturning: joinPoint.proceed() 가 정상적으로 완료된 후 실행할 부가 기능
 - @AfterThrowing: 에러가 발생했을 때 실행할 부가 기능
 - @Around: 메서드 호출 전후에 실행한다. 위의 모든 것을 포함한다.
 
