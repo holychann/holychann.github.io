@@ -26,7 +26,7 @@ Jekyll + Chirpy 테마(gem 방식, `jekyll-theme-chirpy` 7.x), GitHub Pages에 G
 bundle exec jekyll s
 
 # CI와 같은 검증 (빌드 결과는 저장소 밖 scratchpad에)
-JEKYLL_ENV=production bundle exec jekyll b -d <scratch>/build
+JEKYLL_ENV=production bundle exec jekyll b --disable-disk-cache -d <scratch>/build
 bundle exec htmlproofer <scratch>/build --disable-external \
   --ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/"
 ```
@@ -38,11 +38,14 @@ bundle exec htmlproofer <scratch>/build --disable-external \
 초안은 Obsidian 볼트에서 쓰고, 발행본만 이 저장소로 복사한다.
 
 - 볼트: `/Users/holychan/Library/Mobile Documents/iCloud~md~obsidian/Documents`
-  - 블로그 초안: `01_벨로그/` (파일명 = 한글 제목)
+  - 블로그 초안: `01_블로그/` (파일명 = `NN_한글 제목`, 이름이 바뀔 수 있으니 매번 찾는다)
+  - velog에서 옮겨 온 글: `01_벨로그/`
   - 첨부 이미지: `99_Attachments/`
   - 템플릿: `98_Templates/03_Blog.md` (코어 Templates 플러그인, `{{title}}` `{{date}}` 문법)
 - 볼트는 저장소 밖이라 세션에 폴더 접근 권한을 먼저 요청해야 한다.
-- Obsidian 원본 노트는 수정하지 않는다.
+- Obsidian 원본 노트의 문장·내용은 수정하지 않는다.
+  단, 문법 오류(예: 닫는 `**` 앞 공백 `**장점: **`)는 발행본과 원본 노트 양쪽에서 고친다 (사용자 요청).
+- velog에서 붙여넣은 `velog.velcdn.com` 이미지는 내려받아 `assets/img/posts/<슬러그>/`로 옮기고 경로를 바꾼다.
 
 순서:
 
@@ -67,7 +70,8 @@ bundle exec htmlproofer <scratch>/build --disable-external \
 
 6. 위 CI와 같은 검증(프로덕션 빌드 + htmlproofer)을 통과시킨다.
 7. 글과 이미지를 커밋하고 `main`에 push한다. 예: `docs: add post on redis pipelining`
-8. Actions 성공과 라이브 페이지(`https://holychann.github.io/posts/<슬러그>/`) 응답을 확인하고 링크를 전달한다.
+8. 링크(`https://holychann.github.io/posts/<슬러그>/`)를 전달한다.
+   Actions 결과·라이브 페이지 확인은 하지 않는다 (사용자 요청). 사용자가 따로 요청할 때만 확인한다.
 
 ## Chirpy 주의사항
 
@@ -77,6 +81,10 @@ bundle exec htmlproofer <scratch>/build --disable-external \
 - 존재하지 않는 로컬 이미지 경로를 쓰면 htmlproofer가 실패해 배포가 막힌다.
 - 아바타(`assets/img/avatar.jpg`)는 112×112로 늘려 그리므로(`object-fit` 없음) 반드시 정사각형이어야 한다.
 - 이 파일(CLAUDE.md)은 `_config.yml`의 `exclude`에 있어 사이트에 올라가지 않는다.
+- kramdown `hard_wrap: true`라 엔터 한 번이 줄바꿈(`<br>`)이 된다 (velog·Obsidian과 동일).
+  본문 타이포그래피(velog 값)는 `assets/css/jekyll-theme-chirpy.scss`에 있다.
+- 로컬 검증 빌드는 `--disable-disk-cache`를 붙인다. 사용자가 띄워 둔 `jekyll s`가
+  옛 설정으로 `.jekyll-cache`를 덮어써 결과가 틀어질 수 있다 (CI는 캐시를 쓰지 않음).
 
 ## 남은 작업
 
