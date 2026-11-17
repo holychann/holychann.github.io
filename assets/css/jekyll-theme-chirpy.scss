@@ -162,3 +162,113 @@
     }
   }
 }
+
+/*
+ * 데스크톱 사이드바: 평소에는 아이콘만 보이는 좁은 막대(72px)로 접어 두고,
+ * 마우스를 올리거나 키보드로 들어오면 폭이 늘어나며 펼친다.
+ * - 안쪽 배치는 펼친 상태 그대로 두고 사이드바 폭만 잘라 보여 주므로, 펼칠 때 아이콘이 움직이지 않는다.
+ * - 열림은 0.15초 기다렸다 시작해 마우스가 스쳐 지나갈 때는 반응하지 않고, 닫힘은 바로 시작한다.
+ * - 본문 위치(#main-wrapper의 margin-left)는 건드리지 않아 글·목록 자리는 그대로다.
+ */
+$rail-width: 4.5rem;
+$rail-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+$rail-open-delay: 0.15s;
+$rail-close-delay: 0s;
+
+@media (min-width: 850px) {
+  #sidebar {
+    z-index: 3;
+    overflow-x: hidden;
+    width: $rail-width;
+    transition: width 0.26s $rail-ease $rail-close-delay,
+      box-shadow 0.26s ease $rail-close-delay;
+
+    /* 안쪽은 항상 펼친 폭으로 배치해 둔다 (좁아져도 줄바꿈·위치 변화 없음) */
+    align-items: flex-start !important;
+
+    > * {
+      flex-shrink: 0;
+      width: 260px !important;
+    }
+
+    /* 펼쳤을 때만 보이는 요소: 닫힐 때는 먼저 사라진다 */
+    .site-title,
+    .site-subtitle,
+    .sidebar-bottom,
+    .nav-link span {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.12s ease $rail-close-delay,
+        visibility 0s linear calc(#{$rail-close-delay} + 0.12s);
+    }
+
+    /* 아바타: 막대 안에서는 작게, 펼치면 원래 크기 */
+    #avatar {
+      transform-origin: top left;
+      transform: translateX(-1.5rem) scale(0.36);
+      transition: transform 0.26s $rail-ease $rail-close-delay;
+    }
+
+    ul li.nav-item {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+
+    ul li.nav-item.active .nav-link {
+      background-color: transparent;
+      transition: background-color 0.12s ease $rail-close-delay;
+    }
+
+    &:hover,
+    &:focus-within {
+      width: 260px;
+      box-shadow: 1px 0 0 var(--sidebar-border-color);
+      transition: width 0.26s $rail-ease $rail-open-delay,
+        box-shadow 0.26s ease $rail-open-delay;
+
+      .site-title,
+      .site-subtitle,
+      .sidebar-bottom,
+      .nav-link span {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.18s ease calc(#{$rail-open-delay} + 0.09s),
+          visibility 0s linear $rail-open-delay;
+      }
+
+      #avatar {
+        transform: none;
+        transition: transform 0.26s $rail-ease $rail-open-delay;
+      }
+
+      ul li.nav-item.active .nav-link {
+        background-color: var(--sidebar-hover-bg);
+        transition: background-color 0.18s ease $rail-open-delay;
+      }
+    }
+  }
+}
+
+@media (min-width: 1650px) {
+  #sidebar {
+    > * {
+      width: 300px !important;
+    }
+
+    #avatar {
+      transform: translateX(-2.5rem) scale(0.36);
+    }
+
+    &:hover,
+    &:focus-within {
+      width: 300px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #sidebar,
+  #sidebar * {
+    transition-duration: 0s !important;
+  }
+}
