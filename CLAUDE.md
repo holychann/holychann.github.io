@@ -2,7 +2,7 @@
 
 소프트웨어(인프라, 시스템 아키텍처, 안정적인 시스템 구축·운영) 기술 블로그.
 Jekyll + Chirpy 테마(gem 방식, `jekyll-theme-chirpy` 7.x), GitHub Pages에 GitHub Actions로 배포한다.
-사이트: https://holychann.github.io
+사이트: https://blog.holychan.dev (커스텀 도메인, Cloudflare DNS → GitHub Pages)
 
 ## 작업 원칙
 
@@ -32,6 +32,10 @@ bundle exec htmlproofer <scratch>/build --disable-external \
 ```
 
 배포는 `main` push 때만 돈다 (Build and Deploy 워크플로). 다른 브랜치 push로는 사이트가 바뀌지 않는다.
+
+커스텀 도메인 `blog.holychan.dev`: 도메인은 Cloudflare Registrar, DNS는 `blog` CNAME → `holychann.github.io` (DNS only, 프록시 끔).
+도메인 연결은 저장소 Settings → Pages의 Custom domain 값으로 한다. Actions 배포라 `CNAME` 파일은 쓰지 않는다.
+`_config.yml`의 `url`과 Custom domain 값은 항상 같아야 한다.
 
 ## 글 발행 절차 ("발행해줘")
 
@@ -78,7 +82,7 @@ bundle exec htmlproofer <scratch>/build --disable-external \
 
 6. 위 CI와 같은 검증(프로덕션 빌드 + htmlproofer)을 통과시킨다.
 7. 글과 이미지를 커밋하고 `main`에 push한다. 예: `docs: add post on redis pipelining`
-8. 링크(`https://holychann.github.io/posts/<슬러그>/`)를 전달한다.
+8. 링크(`https://blog.holychan.dev/posts/<슬러그>/`)를 전달한다.
    Actions 결과·라이브 페이지 확인은 하지 않는다 (사용자 요청). 사용자가 따로 요청할 때만 확인한다.
 
 ## Chirpy 주의사항
