@@ -26,7 +26,7 @@ AWS Secrets Manager는 시크릿 값을 보관하고 주기적으로 순환(rota
 
 **그럼 Secrets Manager 를 사용하면 되는 거 아니에요?**
 
-하지만 이번에 숨기려는 것은 DynamoDB 호출을 위한 AWS 시크릿 값이었습니다. 인스턴스에 역할 하나만 추가하면 되는 일을 Secrets Manager 에 맡기면 관리 포인트만 하나 더 늘어난다고 판단하였습니다. 그래서 Secrets Manager 는 제외하였습니다.
+하지만 이번에 숨기려는 것은 DynamoDB 호출을 위한 AWS 액세스 키였습니다. 인스턴스에 역할 하나만 추가하면 되는 일을 Secrets Manager 에 맡기면 관리 포인트만 하나 더 늘어난다고 판단하였습니다. 그래서 Secrets Manager 는 제외하였습니다.
 
 ## 2. 두 번째 선택지 - Lambda
 
