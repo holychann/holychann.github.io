@@ -37,6 +37,9 @@ bundle exec htmlproofer <scratch>/build --disable-external \
 도메인 연결은 저장소 Settings → Pages의 Custom domain 값으로 한다. Actions 배포라 `CNAME` 파일은 쓰지 않는다.
 `_config.yml`의 `url`과 Custom domain 값은 항상 같아야 한다.
 
+Google Search Console: URL 접두어 속성 `https://blog.holychan.dev/`, HTML 태그 방식으로 인증한다
+(`_config.yml`의 `webmaster_verifications.google`). 이 값을 지우면 인증이 풀린다. 사이트맵은 `sitemap.xml`.
+
 ## 글 발행 절차 ("발행해줘")
 
 초안은 Obsidian 볼트에서 쓰고, 발행본만 이 저장소로 복사한다.
@@ -101,5 +104,4 @@ bundle exec htmlproofer <scratch>/build --disable-external \
 ## 남은 작업
 
 - giscus 댓글 설정 (`_config.yml`의 `comments`)
-- Google Search Console 등록 (`webmaster_verifications.google`)
 - velog 글 이전: velog 이미지 URL은 내려받아 `assets/img/posts/<슬러그>/`로 옮긴다
