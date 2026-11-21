@@ -24,6 +24,8 @@ image:
 
 AWS Secrets Manager는 시크릿 값을 보관하고 주기적으로 순환(rotation)시켜줄 수 있는 서비스입니다.
 
+![EC2가 Secrets Manager에서 DynamoDB 키를 받아 DynamoDB를 호출하는 흐름](/assets/img/posts/dynamodb-iam-role/03-secrets-manager.png)
+
 **그럼 Secrets Manager 를 사용하면 되는 거 아니에요?**
 
 하지만 이번에 숨기려는 것은 DynamoDB 호출을 위한 AWS 액세스 키였습니다. 인스턴스에 역할 하나만 추가하면 되는 일을 Secrets Manager 에 맡기면 관리 포인트만 하나 더 늘어난다고 판단하였습니다. 그래서 Secrets Manager 는 제외하였습니다.
@@ -31,6 +33,8 @@ AWS Secrets Manager는 시크릿 값을 보관하고 주기적으로 순환(rota
 ## 2. 두 번째 선택지 - Lambda
 
 다음으로 떠올린 방법은 EC2 와 DynamoDB 사이에 Lambda 를 두는 것이었습니다. SNS 메세지를 받은 Lambda 가 다른 AWS 서비스를 호출하는 구조를 보고 떠올린 방법이었습니다.
+
+![EC2가 Lambda를 호출하고 Lambda가 IAM 역할의 임시 키로 DynamoDB를 호출하는 흐름](/assets/img/posts/dynamodb-iam-role/04-lambda.png)
 
 Lambda 는 함수가 실행될 때 역할의 임시 자격 증명을 받기 때문에 EC2 에서 DynamoDB 시크릿 값을 관리할 필요가 없었습니다. 이 방법 역시 검토만 하였습니다.
 
@@ -42,7 +46,7 @@ Lambda 는 함수가 실행될 때 역할의 임시 자격 증명을 받기 때�
 
 ### 3-1. Lambda 의 한계
 
-Lambda를 중간에 두면 DynamoDB의 시크릿 값은 숨길 수 있습니다. 하지만 서버에는 Lambda 함수를 호출하기 위한 시크릿 값이 새로 생깁니다.
+Lambda를 중간에 두면 DynamoDB의 시크릿 값은 숨길 수 있습니다. 하지만 서버에는 Lambda 함수를 호출하기 위한 시크릿 값이 새로 생깁니다. 만약 Lambda 역할을 추가하는 것으로 방금 문제를 해결한다면 굳이 Lambda 역할 말고 DynamoDB 역할을 붙이면 되니 관리 포인트만 늘어나는 것이었습니다.
 
 ### 3-2. Secrets Manager 의 한계
 
