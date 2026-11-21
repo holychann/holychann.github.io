@@ -40,6 +40,9 @@ bundle exec htmlproofer <scratch>/build --disable-external \
 Google Search Console: URL 접두어 속성 `https://blog.holychan.dev/`, HTML 태그 방식으로 인증한다
 (`_config.yml`의 `webmaster_verifications.google`). 이 값을 지우면 인증이 풀린다. 사이트맵은 `sitemap.xml`.
 
+댓글: giscus. 이 저장소 Discussions의 `Announcements` 카테고리에 글 경로(`pathname`)별 토론으로 저장된다.
+giscus GitHub 앱은 이 저장소에만 설치돼 있다. 슬러그(URL)를 바꾸면 기존 댓글과 연결이 끊긴다.
+
 ## 글 발행 절차 ("발행해줘")
 
 초안은 Obsidian 볼트에서 쓰고, 발행본만 이 저장소로 복사한다.
@@ -103,5 +106,4 @@ Google Search Console: URL 접두어 속성 `https://blog.holychan.dev/`, HTML �
 
 ## 남은 작업
 
-- giscus 댓글 설정 (`_config.yml`의 `comments`)
 - velog 글 이전: velog 이미지 URL은 내려받아 `assets/img/posts/<슬러그>/`로 옮긴다
